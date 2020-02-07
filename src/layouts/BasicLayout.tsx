@@ -21,7 +21,10 @@ import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { ConnectState } from '@/models/connect';
 import { isAntDesignPro, getAuthorityFromRouter } from '@/utils/utils';
-import logo from '../assets/logo.svg';
+// import logo from '../assets/logo.svg';
+import logo from '@/assets/logo.png';
+
+import customStyles from './BasicLayout.less';
 
 const noMatch = (
   <Result
@@ -146,6 +149,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
 
   return (
     <ProLayout
+      className={customStyles.customHeader}
       logo={logo}
       menuHeaderRender={(logoDom, titleDom) => (
         <Link to="/">
@@ -153,6 +157,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
           {titleDom}
         </Link>
       )}
+      siderWidth={240}
       onCollapse={handleMenuCollapse}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (menuItemProps.isUrl || menuItemProps.children || !menuItemProps.path) {
