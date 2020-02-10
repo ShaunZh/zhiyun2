@@ -1,0 +1,36 @@
+.icon {
+  margin-bottom: 3px;
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: contain;
+  vertical-align: middle;
+}
+
+.tip {
+  font-size: 12px;
+  padding: 2px 4px;
+  position: absolute;
+  width: 32px;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  visibility: hidden;
+  background: transparent;
+  color: #ffffff;
+  border-radius: 2px;
+
+  transition: 0.5s;
+}
+
+.action {
+  position: relative;
+  &:hover {
+    cursor: pointer;
+    .tip {
+      visibility: visible;
+      background: #929292;
+    }
+  }
+}
