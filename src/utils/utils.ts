@@ -59,3 +59,7 @@ export const getRouteAuthority = (path: string, routeData: Route[]) => {
   });
   return authorities;
 };
+
+// 获取表格中每行的index
+export const getTableRowIndex = (pageSize: number, curPage: number, index: number) =>
+  pageSize * (curPage - 1) + (index + 1);
