@@ -23,6 +23,13 @@ interface IState {
   status: string;
 }
 
+interface IFetchList {
+  pageSize?: number;
+  curPage?: number;
+  keywords?: string;
+  status?: string;
+}
+
 const { Option } = Select;
 const { Search } = Input;
 
@@ -41,7 +48,7 @@ class Operator extends React.Component<{}, IState> {
 
   componentDidMount() {
     this.fetchStatusOptions();
-    this.fetchList();
+    this.fetchList({});
   }
 
   fetchStatusOptions = async () => {
@@ -51,16 +58,22 @@ class Operator extends React.Component<{}, IState> {
     });
   };
 
-  fetchList = async () => {
+  fetchList = async (queryParams: IFetchList) => {
     try {
-      await this.setState({
+      this.setState({
         loading: true,
       });
+      const {
+        pageSize = this.state.pageSize,
+        curPage = this.state.curPage,
+        keywords = this.state.keywords,
+        status = this.state.status,
+      } = queryParams;
       const { page, data } = await operator.list({
-        pageSize: this.state.pageSize,
-        curPage: this.state.curPage,
-        keywords: this.state.keywords,
-        status: this.state.status,
+        pageSize,
+        curPage,
+        keywords,
+        status,
       });
       const list = data.map((item: IOperator, index: number) => {
         const key = getTableRowIndex(this.state.pageSize, this.state.curPage, index);
@@ -74,6 +87,10 @@ class Operator extends React.Component<{}, IState> {
         total: page.total,
         list,
         loading: false,
+        pageSize,
+        curPage,
+        keywords,
+        status,
       });
     } catch (e) {
       this.setState({
@@ -83,54 +100,21 @@ class Operator extends React.Component<{}, IState> {
   };
 
   // 选择状态
-  handleChangeStatus = (e: string) => {
-    // TODO 因为fetchList中需要使用status，curPage等信息，因此，此处在setState中添加了回调函数，
-    // 等待state更新后再执行fetchList，这种操作方式是否破坏了react中对state更新的优化？在react中，
-    // setState 是异步的，也就是react会收集一组setState，然后进行一次更新，不会在setState时立马更新
-    this.setState(
-      {
-        status: e,
-        curPage: 1,
-      },
-      () => {
-        this.fetchList();
-      },
-    );
+  handleChangeStatus = (status: string) => {
+    this.fetchList({ status, curPage: 1 });
   };
 
-  handleSearch = (value: string) => {
-    this.setState(
-      {
-        keywords: value,
-      },
-      () => {
-        this.fetchList();
-      },
-    );
+  handleSearch = (keywords: string) => {
+    this.fetchList({ keywords, curPage: 1 });
   };
 
-  handleChangePageNumber = (page: number) => {
+  handleChangePageNumber = (curPage: number) => {
     // 获取page信息，并设置默认值
-    this.setState(
-      {
-        curPage: page,
-      },
-      () => {
-        this.fetchList();
-      },
-    );
+    this.fetchList({ curPage });
   };
 
-  handleChangePageSize = (current: number, size: number) => {
-    this.setState(
-      {
-        curPage: current,
-        pageSize: size,
-      },
-      () => {
-        this.fetchList();
-      },
-    );
+  handleChangePageSize = (curPage: number, pageSize: number) => {
+    this.fetchList({ curPage, pageSize });
   };
 
   // 编辑
