@@ -68,6 +68,13 @@ export async function update(params: ISubmitOperatorEditParamType) {
   });
 }
 
+export async function remove(params: { number: string }) {
+  return request('/api/system/operator/remove', {
+    method: 'POST',
+    data: params,
+  });
+}
+
 export default {
   list,
   statusOptions,
@@ -75,4 +82,5 @@ export default {
   update,
   roleOptions,
   detail,
+  remove,
 };
