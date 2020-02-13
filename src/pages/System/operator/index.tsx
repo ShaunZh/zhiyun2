@@ -5,12 +5,12 @@ import styles from './index.less';
 import TableBasic, { ITableColumn } from './components/TableBasic';
 import operator, { IOperator } from '@/services/system/operator';
 import { getTableRowIndex } from '@/utils/utils';
+import FormFormInModal, { OperateType } from './components/FormInModal';
 
 interface IStatusOptions {
   label: string;
   value: string;
 }
-
 interface IState {
   loading: boolean;
   list: Array<ITableColumn>;
@@ -21,15 +21,18 @@ interface IState {
   searchLoading: boolean;
   statusOptions: Array<IStatusOptions>;
   status: string;
+  form: {
+    number: string | undefined;
+    operateType: OperateType;
+    visible: boolean; // 新增操作员和编辑操作员表单
+  };
 }
-
 interface IFetchList {
   pageSize?: number;
   curPage?: number;
   keywords?: string;
   status?: string;
 }
-
 const { Option } = Select;
 const { Search } = Input;
 
@@ -44,6 +47,12 @@ class Operator extends React.Component<{}, IState> {
     status: '',
     total: 0,
     searchLoading: false,
+    form: {
+      number: undefined,
+      // 默认操作类型为新增
+      operateType: OperateType.CREATE,
+      visible: false,
+    },
   };
 
   componentDidMount() {
@@ -76,7 +85,7 @@ class Operator extends React.Component<{}, IState> {
         status,
       });
       const list = data.map((item: IOperator, index: number) => {
-        const key = getTableRowIndex(this.state.pageSize, this.state.curPage, index);
+        const key = getTableRowIndex(pageSize, curPage, index);
         return {
           No: key,
           key: item.number,
@@ -101,25 +110,57 @@ class Operator extends React.Component<{}, IState> {
 
   // 选择状态
   handleChangeStatus = (status: string) => {
-    this.fetchList({ status, curPage: 1 });
+    this.fetchList({
+      status,
+      curPage: 1,
+    });
   };
 
+  // 新增
+  handleCreate = () => {
+    this.setState({
+      form: {
+        number: undefined,
+        visible: true,
+        operateType: OperateType.CREATE,
+      },
+    });
+  };
+
+  // 搜索
   handleSearch = (keywords: string) => {
-    this.fetchList({ keywords, curPage: 1 });
+    this.fetchList({
+      keywords,
+      curPage: 1,
+    });
   };
 
+  // 页码
   handleChangePageNumber = (curPage: number) => {
     // 获取page信息，并设置默认值
-    this.fetchList({ curPage });
+    this.fetchList({
+      curPage,
+    });
   };
 
+  // 页尺寸
   handleChangePageSize = (curPage: number, pageSize: number) => {
-    this.fetchList({ curPage, pageSize });
+    this.fetchList({
+      curPage,
+      pageSize,
+    });
   };
 
   // 编辑
   handleActionEdit = (index: number) => {
-    console.log('edit index: ', index);
+    const { key: number } = this.state.list[index];
+    this.setState({
+      form: {
+        number,
+        visible: true,
+        operateType: OperateType.EDIT,
+      },
+    });
   };
 
   // 删除
@@ -132,6 +173,22 @@ class Operator extends React.Component<{}, IState> {
     console.log('send index: ', index);
   };
 
+  // 提交表单成功后需要刷新表格数据
+  handleFormResult = (type: string) => {
+    if (type === 'success') {
+      this.fetchList({
+        curPage: 1,
+      });
+    }
+    this.setState((state: IState) => ({
+      ...state,
+      form: {
+        ...state.form,
+        visible: false,
+      },
+    }));
+  };
+
   render() {
     const { loading, list, total, curPage, searchLoading } = this.state;
     return (
@@ -141,7 +198,12 @@ class Operator extends React.Component<{}, IState> {
             <span className="u-name">状态: </span>
             <Select
               placeholder="请选择状态"
-              style={{ width: 240, height: 34, marginRight: 20, marginLeft: 10 }}
+              style={{
+                width: 240,
+                height: 34,
+                marginRight: 20,
+                marginLeft: 10,
+              }}
               onChange={this.handleChangeStatus}
             >
               {this.state.statusOptions.map(item => (
@@ -150,17 +212,22 @@ class Operator extends React.Component<{}, IState> {
                 </Option>
               ))}
             </Select>
-            <Button type="primary">新增操作员</Button>
+            <Button type="primary" onClick={this.handleCreate}>
+              新增操作员
+            </Button>
           </Col>
           <Col className="right">
             <Search
               placeholder="输入搜索内容"
               loading={searchLoading}
               onSearch={this.handleSearch}
-              style={{ width: 200 }}
+              style={{
+                width: 200,
+              }}
             />
           </Col>
         </Row>
+
         <TableBasic
           loading={loading}
           list={list}
@@ -177,6 +244,10 @@ class Operator extends React.Component<{}, IState> {
           showSizeChanger
           showQuickJumper
         ></Pagination>
+        <FormFormInModal
+          handleResult={this.handleFormResult}
+          {...this.state.form}
+        ></FormFormInModal>
       </PageHeaderWrapper>
     );
   }

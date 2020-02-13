@@ -17,9 +17,16 @@ export interface IOperator {
   time: string;
 }
 
-// export interface IOperatorList {
-//   list: Array<IOperator>;
-// }
+export interface ISubmitOperatorParamType {
+  account: string;
+  operator: string;
+  mobile: string;
+  role: string;
+}
+
+export interface ISubmitOperatorEditParamType extends ISubmitOperatorParamType {
+  number: string;
+}
 
 export async function list(params: IOperatorsListsParamType) {
   return request('/api/system/operator/list', {
@@ -34,7 +41,38 @@ export async function statusOptions() {
   });
 }
 
+export async function create(params: ISubmitOperatorParamType) {
+  return request('/api/system/operator/create', {
+    method: 'POST',
+    data: params,
+  });
+}
+
+export async function roleOptions() {
+  return request('/api/system/operator/roleOptions', {
+    method: 'POST',
+  });
+}
+
+export async function detail(params: { number: string }) {
+  return request('/api/system/operator/detail', {
+    method: 'POST',
+    data: params,
+  });
+}
+
+export async function update(params: ISubmitOperatorEditParamType) {
+  return request('/api/system/operator/edit', {
+    method: 'POST',
+    data: params,
+  });
+}
+
 export default {
   list,
   statusOptions,
+  create,
+  update,
+  roleOptions,
+  detail,
 };

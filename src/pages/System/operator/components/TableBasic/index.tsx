@@ -8,7 +8,7 @@ import iconDel from '@/assets/icon-del.png';
 import iconSend from '@/assets/icon-send.png';
 
 export interface ITableColumn {
-  key: number;
+  key: string;
   No: number;
   account: string;
   operator: string;
@@ -97,8 +97,6 @@ export default (props: ITableProps) => {
     delay: 500,
     spinning: loading,
   };
-
-  console.log('lllllll', list);
 
   return (
     <div className={styles.container}>
