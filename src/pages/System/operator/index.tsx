@@ -1,6 +1,6 @@
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import React from 'react';
-import { Select, Button, Input, Row, Col, Pagination } from 'antd';
+import { Select, Button, Input, Row, Col, Pagination, Modal, message } from 'antd';
 import styles from './index.less';
 import TableBasic, { ITableColumn } from './components/TableBasic';
 import operator, { IOperator } from '@/services/system/operator';
@@ -35,6 +35,7 @@ interface IFetchList {
 }
 const { Option } = Select;
 const { Search } = Input;
+const { confirm } = Modal;
 
 class Operator extends React.Component<{}, IState> {
   state: IState = {
@@ -165,7 +166,16 @@ class Operator extends React.Component<{}, IState> {
 
   // 删除
   handleActionDelete = (index: number) => {
-    console.log('delete index: ', index);
+    const { key: number } = this.state.list[index];
+    confirm({
+      title: '确认删除',
+      onOk: async () => {
+        await operator.remove({ number });
+        message.success('删除成功');
+        this.fetchList({});
+      },
+      onCancel() {},
+    });
   };
 
   // 发送
@@ -187,6 +197,7 @@ class Operator extends React.Component<{}, IState> {
         visible: false,
       },
     }));
+    message.success('保存成功');
   };
 
   render() {
