@@ -49,13 +49,11 @@ class UserForm extends React.Component<IUserFormProps, IUserFormState> {
 
   componentDidMount() {
     if (this.props.number) {
-      console.log('detail');
-      this.fetchOperatorDetall(this.props.number);
+      this.fetchOperatorDetail(this.props.number);
     }
-    console.log('user form did mount');
   }
 
-  fetchOperatorDetall = async (number: string) => {
+  fetchOperatorDetail = async (number: string) => {
     const { result } = await operator.detail({ number });
     this.setState({
       formInitial: {
@@ -82,7 +80,6 @@ class UserForm extends React.Component<IUserFormProps, IUserFormState> {
     const { form } = this.props;
     form.resetFields();
     this.props.handleResult('cancel');
-    console.log('form cancel');
   };
 
   // 提交
