@@ -63,7 +63,11 @@ export default {
   'POST /api/system/operator/update': mockjs.mock({
     code: 200,
   }),
-  'POST /api/system/operator/remove': mockjs.mock({
-    code: 200,
-  }),
+  'POST /api/system/operator/remove': (req, res) => {
+    setTimeout(() => {
+      res.send({
+        code: 200,
+      });
+    }, 3000);
+  },
 };
