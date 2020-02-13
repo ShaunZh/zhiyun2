@@ -29,8 +29,14 @@ export default {
       },
     ],
   }),
-  'POST /api/system/operator/create': {
-    code: 200,
+  'POST /api/system/operator/create': (req, res) => {
+    setTimeout(
+      () =>
+        res.send({
+          code: 200,
+        }),
+      10000,
+    );
   },
 
   'POST /api/system/operator/roleOptions': mockjs.mock({
@@ -55,6 +61,9 @@ export default {
     },
   }),
   'POST /api/system/operator/update': mockjs.mock({
+    code: 200,
+  }),
+  'POST /api/system/operator/remove': mockjs.mock({
     code: 200,
   }),
 };
