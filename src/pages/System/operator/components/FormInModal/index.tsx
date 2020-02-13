@@ -25,6 +25,7 @@ interface IUserFormState {
     mobile: string;
     role: string;
   };
+  submitting: boolean;
 }
 
 interface IFormFieds {
@@ -43,6 +44,7 @@ class UserForm extends React.Component<IUserFormProps, IUserFormState> {
       mobile: '',
       role: '',
     },
+    submitting: false,
   };
 
   componentDidMount() {
@@ -91,6 +93,10 @@ class UserForm extends React.Component<IUserFormProps, IUserFormState> {
         return;
       }
       try {
+        // 防重复提交
+        await this.setState({
+          submitting: true,
+        });
         if (operateType === OperateType.EDIT) {
           await operator.update({
             ...values,
@@ -99,10 +105,16 @@ class UserForm extends React.Component<IUserFormProps, IUserFormState> {
         } else {
           await operator.create(values);
         }
+        this.setState({
+          submitting: false,
+        });
         form.resetFields();
         this.props.handleResult('success');
       } catch (e) {
         console.log('submit error: ', e.message);
+        this.setState({
+          submitting: false,
+        });
       }
     });
   };
@@ -162,7 +174,12 @@ class UserForm extends React.Component<IUserFormProps, IUserFormState> {
         </Form>
         <div className={styles.btnWrap}>
           <Button onClick={this.handleCancel}>取消</Button>
-          <Button type="primary" htmlType="submit" onClick={this.handleSubmit}>
+          <Button
+            type="primary"
+            htmlType="submit"
+            onClick={this.handleSubmit}
+            loading={this.state.submitting}
+          >
             保存
           </Button>
         </div>
@@ -205,6 +222,7 @@ export default (props: IFormInModal) => {
       // 当modal关闭时，摧毁包裹的子组件
       destroyOnClose
       title={props.operateType === OperateType.CREATE ? '新增操作员' : '编辑操作员'}
+      onCancel={() => props.handleResult('cancel')}
     >
       <CreateForm {...props} roleOptions={roleOptions} />
     </Modal>
