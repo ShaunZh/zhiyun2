@@ -6,20 +6,23 @@ export default {
     setTimeout(() => {
       res.send(
         mockjs.mock({
-          page: {
-            total: 100,
-          },
-          'data|10': [
-            {
-              number: '@id',
-              account: '@id',
-              operator: '@first',
-              mobile: '1212121',
-              'role|1': ['管理员', '超级管理员'],
-              'status|1': ['已启用', '已禁用'],
-              time: '@datetime',
+          code: 200,
+          result: {
+            page: {
+              total: 100,
             },
-          ],
+            'data|10': [
+              {
+                number: '@id',
+                account: '@id',
+                operator: '@first',
+                mobile: '1212121',
+                'role|1': ['管理员', '超级管理员'],
+                'status|1': ['已启用', '已禁用'],
+                time: '@datetime',
+              },
+            ],
+          },
         }),
       );
     }, 3000);
