@@ -1,16 +1,14 @@
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import React from 'react';
-import { Select, Button, Input, Row, Col, Pagination, Modal, message } from 'antd';
+import { Button, Row, Col, Pagination, Modal, message } from 'antd';
 import styles from './index.less';
 import TableBasic, { ITableColumn } from './components/TableBasic';
+import StatusSelect from './components/StatusSelect';
+import SearchBox from '@/components/SearchBox';
 import operator, { IOperator } from '@/services/system/operator';
 import { getTableRowIndex } from '@/utils/utils';
 import FormFormInModal, { OperateType } from './components/FormInModal';
 
-interface IStatusOptions {
-  label: string;
-  value: string;
-}
 interface IState {
   loading: boolean;
   list: Array<ITableColumn>;
@@ -19,7 +17,6 @@ interface IState {
   pageSize: number;
   keywords: string;
   searchLoading: boolean;
-  statusOptions: Array<IStatusOptions>;
   status: string;
   form: {
     number: string | undefined;
@@ -33,8 +30,6 @@ interface IFetchList {
   keywords?: string;
   status?: string;
 }
-const { Option } = Select;
-const { Search } = Input;
 const { confirm } = Modal;
 
 class Operator extends React.Component<{}, IState> {
@@ -44,7 +39,6 @@ class Operator extends React.Component<{}, IState> {
     curPage: 1,
     pageSize: 10,
     keywords: '',
-    statusOptions: [],
     status: '',
     total: 0,
     searchLoading: false,
@@ -57,16 +51,8 @@ class Operator extends React.Component<{}, IState> {
   };
 
   componentDidMount() {
-    this.fetchStatusOptions();
     this.fetchList({});
   }
-
-  fetchStatusOptions = async () => {
-    const { result } = await operator.statusOptions();
-    this.setState({
-      statusOptions: result,
-    });
-  };
 
   fetchList = async (queryParams: IFetchList) => {
     try {
@@ -201,41 +187,18 @@ class Operator extends React.Component<{}, IState> {
   };
 
   render() {
-    const { loading, list, total, curPage, searchLoading } = this.state;
+    const { loading, list, total, curPage } = this.state;
     return (
       <PageHeaderWrapper className={styles.main}>
         <Row className="header" type="flex" align="middle" justify="space-between">
           <Col className="left">
-            <span className="u-name">状态: </span>
-            <Select
-              placeholder="请选择状态"
-              style={{
-                width: 240,
-                height: 34,
-                marginRight: 20,
-                marginLeft: 10,
-              }}
-              onChange={this.handleChangeStatus}
-            >
-              {this.state.statusOptions.map(item => (
-                <Option value={item.value} key={item.value}>
-                  {item.label}
-                </Option>
-              ))}
-            </Select>
+            <StatusSelect handleChangeStatus={this.handleChangeStatus}></StatusSelect>
             <Button type="primary" onClick={this.handleCreate}>
               新增操作员
             </Button>
           </Col>
           <Col className="right">
-            <Search
-              placeholder="输入搜索内容"
-              loading={searchLoading}
-              onSearch={this.handleSearch}
-              style={{
-                width: 200,
-              }}
-            />
+            <SearchBox placeholder="请输入搜索内容" handleSearch={this.handleSearch}></SearchBox>
           </Col>
         </Row>
 
