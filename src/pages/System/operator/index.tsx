@@ -5,7 +5,7 @@ import styles from './index.less';
 import TableBasic, { ITableColumn } from './components/TableBasic';
 import StatusSelect from './components/StatusSelect';
 import SearchBox from '@/components/SearchBox';
-import operator, { IOperator } from '@/services/system/operator';
+import operatorApi, { IOperator } from '@/services/system/operator';
 import { getTableRowIndex } from '@/utils/utils';
 import FormFormInModal, { OperateType } from './components/FormInModal';
 
@@ -65,7 +65,9 @@ class Operator extends React.Component<{}, IState> {
         keywords = this.state.keywords,
         status = this.state.status,
       } = queryParams;
-      const { page, data } = await operator.list({
+      const {
+        result: { page, data },
+      } = await operatorApi.list({
         pageSize,
         curPage,
         keywords,
@@ -156,7 +158,7 @@ class Operator extends React.Component<{}, IState> {
     confirm({
       title: '确认删除',
       onOk: async () => {
-        await operator.remove({ number });
+        await operatorApi.remove({ number });
         message.success('删除成功');
         this.fetchList({});
       },
@@ -175,6 +177,7 @@ class Operator extends React.Component<{}, IState> {
       this.fetchList({
         curPage: 1,
       });
+      message.success('保存成功');
     }
     this.setState((state: IState) => ({
       ...state,
@@ -183,7 +186,6 @@ class Operator extends React.Component<{}, IState> {
         visible: false,
       },
     }));
-    message.success('保存成功');
   };
 
   render() {
