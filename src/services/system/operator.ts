@@ -62,7 +62,7 @@ export async function detail(params: { number: string }) {
 }
 
 export async function update(params: ISubmitOperatorEditParamType) {
-  return request('/api/system/operator/edit', {
+  return request('/api/system/operator/update', {
     method: 'POST',
     data: params,
   });
