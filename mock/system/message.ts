@@ -22,7 +22,7 @@ export default {
           },
         }),
       );
-    }, 3000);
+    }, 500);
   },
   'POST /api/system/message/statusOptions': mockjs.mock({
     'result|1-5': [
