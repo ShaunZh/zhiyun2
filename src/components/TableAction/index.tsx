@@ -4,11 +4,11 @@ import styles from './index.less';
 interface ITableActionProps {
   iconSrc: string; // 图标地址
   hoverTip: string; // 图标hover提示
-  handleClick: () => void;
+  handleClick?: () => void;
 }
 
 const TableAction: React.FC<ITableActionProps> = props => {
-  const { iconSrc, hoverTip, handleClick } = props;
+  const { iconSrc, hoverTip, handleClick = () => {} } = props;
 
   const onHandleClick = () => {
     handleClick();
