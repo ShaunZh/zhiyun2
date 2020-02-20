@@ -116,19 +116,41 @@ export default {
               name: 'system',
               icon: 'smile',
               path: '/system',
-              component: './System',
+              component: './system',
               routes: [
                 {
                   name: 'operator',
                   icon: 'smile',
                   path: 'operator',
-                  component: './System/operator',
+                  component: './system/operator',
                 },
                 {
                   name: 'message',
                   icon: 'smile',
                   path: 'message',
-                  component: './System/message',
+                  component: './system/message',
+                },
+              ],
+            },
+
+            {
+              name: 'course',
+              icon: 'smile',
+              path: '/course',
+              component: './course',
+              routes: [
+                {
+                  name: 'index',
+                  icon: 'smile',
+                  path: 'course',
+                  component: './course/course/index/index',
+                },
+                {
+                  name: 'resources',
+                  icon: 'smile',
+                  path: 'resources',
+                  component: './course/course/resources',
+                  hideInMenu: true,
                 },
               ],
             },
