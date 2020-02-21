@@ -152,6 +152,13 @@ export default {
                   component: './course/course/resources',
                   hideInMenu: true,
                 },
+                {
+                  name: 'staff',
+                  icon: 'smile',
+                  path: 'staff',
+                  component: './course/course/staff',
+                  hideInMenu: true,
+                },
               ],
             },
             {

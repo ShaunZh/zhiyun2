@@ -105,7 +105,9 @@ export default (props: ITableProps) => {
             hoverTip={record.status === 'Y' ? '禁用' : '启用'}
             handleClick={() => handleActionEnable(index)}
           ></TableAction>
-          <TableAction iconSrc={iconDel} hoverTip="人员信息"></TableAction>
+          <Link to="/course/staff">
+            <TableAction iconSrc={iconDel} hoverTip="人员信息"></TableAction>
+          </Link>
           <Link to="/course/resources">
             <TableAction iconSrc={iconSend} hoverTip="课程资源"></TableAction>
           </Link>
