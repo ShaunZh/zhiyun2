@@ -174,6 +174,20 @@ export default {
               ],
             },
             {
+              name: 'staff',
+              icon: 'smile',
+              path: '/staff',
+              component: './Staff',
+              routes: [
+                {
+                  name: 'userInfo',
+                  icon: 'smile',
+                  path: 'userinfo',
+                  component: './Staff/userInfo',
+                },
+              ],
+            },
+            {
               name: 'statistics',
               icon: 'smile',
               path: '/statistics',

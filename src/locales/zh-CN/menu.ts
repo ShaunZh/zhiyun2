@@ -62,4 +62,6 @@ export default {
   'menu.statistics.storage': '存储统计',
   'menu.statistics.users': '用户统计',
   'menu.statistics.classes': '课程统计',
+  'menu.staff': '人员管理',
+  'menu.staff.userInfo': '用户信息管理',
 };
