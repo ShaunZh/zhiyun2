@@ -61,4 +61,5 @@ export default {
   'menu.statistics.finance': '财务统计',
   'menu.statistics.storage': '存储统计',
   'menu.statistics.users': '用户统计',
+  'menu.statistics.classes': '课程统计',
 };

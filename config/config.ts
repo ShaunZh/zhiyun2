@@ -197,6 +197,12 @@ export default {
                   path: 'users',
                   component: './statistics/Users',
                 },
+                {
+                  name: 'classes',
+                  icon: 'smile',
+                  path: 'class',
+                  component: './statistics/Class',
+                },
               ],
             },
             {
