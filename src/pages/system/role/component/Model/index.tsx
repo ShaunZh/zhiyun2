@@ -21,7 +21,7 @@ interface modalProps {
     | [];
   value: string[] | [];
   selectNode: (value: string[]) => void;
-  changeInputValue: (e: any) => void;
+  changeInputValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputValue: string;
 }
 export default (props: modalProps) => {

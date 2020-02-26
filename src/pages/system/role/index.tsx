@@ -157,7 +157,7 @@ class Role extends React.Component<{}, Istate> {
     this.setState({ value });
   };
   //输入管理员名字发生的事件
-  changeInputValue = (e: any) => {
+  changeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
     this.setState({
       inputValue: e.target.value,

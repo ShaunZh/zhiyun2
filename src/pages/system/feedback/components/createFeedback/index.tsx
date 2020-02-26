@@ -4,10 +4,10 @@ import { Modal, Input } from 'antd';
 const { TextArea } = Input;
 interface propsType {
   createFeedbackVisible: boolean;
-  textAreaValue:string,
+  textAreaValue: string;
   createFeedbackHandleOk: () => void;
   createFeedbackHandleCancel: () => void;
-  textAreaChange:(e:any)=>void
+  textAreaChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 export default (props: propsType) => {
   return (
@@ -24,7 +24,11 @@ export default (props: propsType) => {
           placeholder="Controlled autosize"
           autoSize={{ minRows: 7, maxRows: 18 }}
         />
-       {props.textAreaValue.length>300?<div className={styles.more}>字数不能超过300</div>:<div className={styles.less}>字数不能超过300</div>}
+        {props.textAreaValue.length > 300 ? (
+          <div className={styles.more}>字数不能超过300</div>
+        ) : (
+          <div className={styles.less}>字数不能超过300</div>
+        )}
       </div>
     </Modal>
   );

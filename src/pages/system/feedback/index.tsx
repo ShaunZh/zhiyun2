@@ -140,7 +140,7 @@ class Feedback extends React.Component<{}, IState> {
     });
   };
   //反馈文本框的输入事件
-  textAreaChange = (e: any) => {
+  textAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     console.log(e.target.value);
     this.setState({
       textAreaValue: e.target.value,
