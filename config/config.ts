@@ -191,6 +191,12 @@ export default {
                   path: 'storage',
                   component: './statistics/storage',
                 },
+                {
+                  name: 'users',
+                  icon: 'smile',
+                  path: 'users',
+                  component: './statistics/Users',
+                },
               ],
             },
             {
