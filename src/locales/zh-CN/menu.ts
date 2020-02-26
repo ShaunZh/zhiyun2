@@ -57,4 +57,6 @@ export default {
   'menu.course.index': '课程管理 ',
   'menu.course.resources': '课程资源',
   'menu.course.staff': '人员信息',
+  'menu.statistics': '统计分析',
+  'menu.statistics.finance': '财务统计',
 };

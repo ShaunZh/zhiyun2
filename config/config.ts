@@ -174,6 +174,20 @@ export default {
               ],
             },
             {
+              name: 'statistics',
+              icon: 'smile',
+              path: '/statistics',
+              component: './statistics',
+              routes: [
+                {
+                  name: 'finance',
+                  icon: 'smile',
+                  path: 'finance',
+                  component: './statistics/finance',
+                },
+              ],
+            },
+            {
               component: './404',
             },
           ],
