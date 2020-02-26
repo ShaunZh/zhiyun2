@@ -64,4 +64,5 @@ export default {
   'menu.statistics.classes': '课程统计',
   'menu.staff': '人员管理',
   'menu.staff.userInfo': '用户信息管理',
+  'menu.staff.cloudpie': '云盘信息管理',
 };

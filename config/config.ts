@@ -185,6 +185,13 @@ export default {
                   path: 'userinfo',
                   component: './Staff/userInfo',
                 },
+                {
+                  name: 'cloudpie',
+                  icon: 'smile',
+                  path: 'cloudpie',
+                  component: './staff/cloudpie',
+                  hideInMenu: true,
+                },
               ],
             },
             {
