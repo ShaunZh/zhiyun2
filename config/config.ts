@@ -130,6 +130,12 @@ export default {
                   path: 'message',
                   component: './system/message',
                 },
+                {
+                  name: 'role',
+                  icon: 'smile',
+                  path: 'role',
+                  component: './System/role',
+                },
               ],
             },
 
