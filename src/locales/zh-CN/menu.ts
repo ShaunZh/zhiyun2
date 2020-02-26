@@ -52,6 +52,7 @@ export default {
   'menu.system.operator': '操作员管理',
   'menu.system.message': '系统消息',
   'menu.system.role': '角色管理',
+  'menu.system.feedback': '反馈管理',
   'menu.course': '课程管理',
   'menu.course.index': '课程管理 ',
   'menu.course.resources': '课程资源',

@@ -136,6 +136,12 @@ export default {
                   path: 'role',
                   component: './System/role',
                 },
+                {
+                  name: 'feedback',
+                  icon: 'smile',
+                  path: 'feedback',
+                  component: './System/feedback',
+                },
               ],
             },
 
