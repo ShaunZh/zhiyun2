@@ -185,6 +185,12 @@ export default {
                   path: 'finance',
                   component: './statistics/finance',
                 },
+                {
+                  name: 'storage',
+                  icon: 'smile',
+                  path: 'storage',
+                  component: './statistics/storage',
+                },
               ],
             },
             {

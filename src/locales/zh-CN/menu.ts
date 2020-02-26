@@ -59,4 +59,5 @@ export default {
   'menu.course.staff': '人员信息',
   'menu.statistics': '统计分析',
   'menu.statistics.finance': '财务统计',
+  'menu.statistics.storage': '存储统计',
 };
