@@ -195,6 +195,20 @@ export default {
               ],
             },
             {
+              name: 'platform',
+              icon: 'smile',
+              path: '/platform',
+              component: './platForm',
+              routes: [
+                {
+                  name: 'school',
+                  icon: 'smile',
+                  path: 'school',
+                  component: './platForm/school',
+                },
+              ],
+            },
+            {
               name: 'statistics',
               icon: 'smile',
               path: '/statistics',
