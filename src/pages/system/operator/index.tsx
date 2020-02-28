@@ -45,7 +45,7 @@ class Operator extends React.Component<{}, IState> {
     form: {
       number: undefined,
       // 默认操作类型为新增
-      operateType: OperateType.CREATE,
+      operateType: OperateType.create,
       visible: false,
     },
   };
@@ -111,7 +111,7 @@ class Operator extends React.Component<{}, IState> {
       form: {
         number: undefined,
         visible: true,
-        operateType: OperateType.CREATE,
+        operateType: OperateType.create,
       },
     });
   };
@@ -147,7 +147,7 @@ class Operator extends React.Component<{}, IState> {
       form: {
         number,
         visible: true,
-        operateType: OperateType.EDIT,
+        operateType: OperateType.edit,
       },
     });
   };
