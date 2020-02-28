@@ -111,8 +111,12 @@ export default (props: ITableProps) => {
           <Link to="/course/resources">
             <TableAction iconSrc={iconSend} hoverTip="课程资源"></TableAction>
           </Link>
-          <TableAction iconSrc={iconSend} hoverTip="直播间"></TableAction>
-          <TableAction iconSrc={iconSend} hoverTip="上架信息"></TableAction>
+          <Link to="/course/live">
+            <TableAction iconSrc={iconSend} hoverTip="直播间"></TableAction>
+          </Link>
+          <Link to="/course/sale">
+            <TableAction iconSrc={iconSend} hoverTip="上架信息"></TableAction>
+          </Link>
         </div>
       ),
     },
@@ -130,7 +134,6 @@ export default (props: ITableProps) => {
         columns={columns}
         rowKey="key"
         dataSource={list}
-        rowClassName={() => `table-row-height`}
         pagination={false}
       />
     </div>
