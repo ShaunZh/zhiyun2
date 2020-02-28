@@ -7,8 +7,8 @@ import styles from './index.less';
 import messageApi from '@/services/system/message';
 
 export enum OperateType {
-  CREATE,
-  EDIT,
+  create,
+  edit,
 }
 const { TextArea } = Input;
 
@@ -72,7 +72,7 @@ class UserForm extends React.Component<IUserFormProps, IUserFormState> {
         await this.setState({
           submitting: true,
         });
-        if (operateType === OperateType.EDIT) {
+        if (operateType === OperateType.edit) {
           await messageApi.update({
             ...values,
             number: this.props.number as string,
@@ -86,7 +86,7 @@ class UserForm extends React.Component<IUserFormProps, IUserFormState> {
         form.resetFields();
         this.props.handleResult('success');
       } catch (e) {
-        console.log('submit error: ', e.message);
+        console.error('error: ', e.message);
         this.setState({
           submitting: false,
         });
@@ -155,7 +155,7 @@ export default (props: IFormInModal) => (
     visible={props.visible}
     // 当modal关闭时，摧毁包裹的子组件
     destroyOnClose
-    title={props.operateType === OperateType.CREATE ? '新增消息' : '编辑消息'}
+    title={props.operateType === OperateType.create ? '新增消息' : '编辑消息'}
     onCancel={() => props.handleResult('cancel')}
   >
     <CreateForm {...props} />

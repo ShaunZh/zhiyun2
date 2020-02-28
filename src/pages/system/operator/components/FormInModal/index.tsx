@@ -9,8 +9,8 @@ import operator from '@/services/system/operator';
 const { Option } = Select;
 
 export enum OperateType {
-  CREATE,
-  EDIT,
+  create,
+  edit,
 }
 
 interface IUserFormProps extends FormComponentProps, IFormInModal {
@@ -94,7 +94,7 @@ class UserForm extends React.Component<IUserFormProps, IUserFormState> {
         await this.setState({
           submitting: true,
         });
-        if (operateType === OperateType.EDIT) {
+        if (operateType === OperateType.edit) {
           await operator.update({
             ...values,
             number: this.props.number as string,
@@ -108,7 +108,7 @@ class UserForm extends React.Component<IUserFormProps, IUserFormState> {
         form.resetFields();
         this.props.handleResult('success');
       } catch (e) {
-        console.log('submit error: ', e.message);
+        console.error('error: ', e.message);
         this.setState({
           submitting: false,
         });
@@ -218,7 +218,7 @@ export default (props: IFormInModal) => {
       visible={props.visible}
       // 当modal关闭时，摧毁包裹的子组件
       destroyOnClose
-      title={props.operateType === OperateType.CREATE ? '新增操作员' : '编辑操作员'}
+      title={props.operateType === OperateType.create ? '新增操作员' : '编辑操作员'}
       onCancel={() => props.handleResult('cancel')}
     >
       <CreateForm {...props} roleOptions={roleOptions} />
