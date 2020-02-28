@@ -65,6 +65,8 @@ export default {
   'menu.staff': '人员管理',
   'menu.staff.userInfo': '用户信息管理',
   'menu.staff.cloudpie': '云盘信息管理',
-  'menu.platform':'平台管理',
-  'menu.platform.school':'网校管理',
+  'menu.platform': '平台管理',
+  'menu.platform.school': '网校管理',
+  'menu.course.live': '直播间详情',
+  'menu.course.sale': '上架信息',
 };
