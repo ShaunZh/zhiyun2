@@ -151,6 +151,7 @@ export default {
               path: '/course',
               component: './course',
               routes: [
+                // ---- 课程管理 -----
                 {
                   name: 'index',
                   icon: 'smile',
@@ -184,6 +185,13 @@ export default {
                   path: 'sale',
                   component: './course/course/sale',
                   hideInMenu: true,
+                },
+                // ---- end 课程管理 -----
+                {
+                  name: 'category',
+                  icon: 'smile',
+                  path: 'category',
+                  component: './course/category/index/',
                 },
               ],
             },
