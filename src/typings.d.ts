@@ -40,3 +40,23 @@ interface ISelectOption {
   label: string;
   value: string;
 }
+
+// 请求列表时分页信息
+interface IPageParams {
+  page: {
+    pageNumbers: number;
+    countPerPages: number;
+  };
+}
+
+interface HttpResponse {
+  code: number;
+  result: {
+    data: any;
+    page?: {
+      pageNumbers: number;
+      countPerPages: number;
+    };
+    total?: number;
+  };
+}
