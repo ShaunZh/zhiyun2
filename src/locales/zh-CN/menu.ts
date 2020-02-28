@@ -69,4 +69,5 @@ export default {
   'menu.platform.school': '网校管理',
   'menu.course.live': '直播间详情',
   'menu.course.sale': '上架信息',
+  'menu.course.category': '分类管理',
 };
