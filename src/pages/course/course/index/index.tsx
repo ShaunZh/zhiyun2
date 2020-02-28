@@ -39,6 +39,7 @@ interface IFetchList {
   school?: string;
 }
 
+// TODO: 当进入到子页面后，从子页面返回时到当前页面时，要保留当前的页码信息、筛选信息和搜索信息，
 class Course extends React.Component<{}, IState> {
   state: IState = {
     loading: false,
