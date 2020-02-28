@@ -5,7 +5,7 @@ import { Row, Col, Pagination } from 'antd';
 import styles from './styles.less';
 
 import SearchBox from '@/components/SearchBox';
-import Radios from './components/Radios';
+import Radios from '@/components/Radios';
 import TableBasic, { ITableColumn } from './components/TableBasic';
 
 import resourcesApi, { IResource } from '@/services/course/resources';
@@ -39,7 +39,7 @@ class Resources extends React.Component<{}, IState> {
     listQuery: {
       pageSize: 10,
       curPage: 1,
-      type: '',
+      type: '1',
       keywords: '',
     },
     list: [],
@@ -161,6 +161,7 @@ class Resources extends React.Component<{}, IState> {
         <Row className="header" type="flex">
           <Col className="left" span={20}>
             <Radios
+              defaultValue={this.state.listQuery.type}
               radiosList={this.state.radiosList}
               handleChange={this.handleChangeType}
             ></Radios>
