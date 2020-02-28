@@ -171,6 +171,20 @@ export default {
                   component: './course/course/staff',
                   hideInMenu: true,
                 },
+                {
+                  name: 'live',
+                  icon: 'smile',
+                  path: 'live',
+                  component: './course/course/live',
+                  hideInMenu: true,
+                },
+                {
+                  name: 'sale',
+                  icon: 'smile',
+                  path: 'sale',
+                  component: './course/course/sale',
+                  hideInMenu: true,
+                },
               ],
             },
             {
