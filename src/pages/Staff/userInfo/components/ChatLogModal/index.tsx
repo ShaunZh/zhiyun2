@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Tabs, Row, Col } from 'antd';
+import { Modal, Tabs, List, Avatar } from 'antd';
 import styles from './index.less';
 const { TabPane } = Tabs;
 export interface listType {
@@ -12,7 +12,7 @@ interface propsType {
   chatLogHandleCancel: () => void;
   friendsList: Array<listType>;
   groupList: Array<listType>;
-  throughoutLogs:()=>void
+  throughoutLogs: (item: listType) => void;
 }
 export default (props: propsType) => {
   return (
@@ -26,30 +26,48 @@ export default (props: propsType) => {
     >
       <Tabs defaultActiveKey="1" className={styles.tab}>
         <TabPane tab="好友" key="1">
-          {props.friendsList.map((item: listType, index: number) => {
-            return (
-              <Row key={index}>
-                <Col span={6}>
-                  <img src={item.avator}></img>
-                </Col>
-                <Col span={6}>{item.name}</Col>
-                <Col span={12} className={styles.throughout} onClick={props.throughoutLogs}>查看</Col>
-              </Row>
-            );
-          })}
+          <List
+            itemLayout="horizontal"
+            dataSource={props.friendsList}
+            renderItem={item => (
+              <List.Item
+                actions={[
+                  <a
+                    key="list-loadmore-edit"
+                    onClick={() => {
+                      props.throughoutLogs(item);
+                    }}
+                  >
+                    查看
+                  </a>,
+                ]}
+              >
+                <List.Item.Meta avatar={<Avatar src={item.avator} />} title={item.name} />
+              </List.Item>
+            )}
+          />
         </TabPane>
         <TabPane tab="群" key="2">
-          {props.groupList.map((item: listType, index: number) => {
-            return (
-              <Row key={index}>
-                <Col span={6}>
-                  <img src={item.avator}></img>
-                </Col>
-                <Col span={6}>{item.name}</Col>
-                <Col span={12} className={styles.throughout} onClick={props.throughoutLogs}>查看</Col>
-              </Row>
-            );
-          })}
+          <List
+            itemLayout="horizontal"
+            dataSource={props.groupList}
+            renderItem={item => (
+              <List.Item
+                actions={[
+                  <a
+                    key="list-loadmore-edit"
+                    onClick={() => {
+                      props.throughoutLogs(item);
+                    }}
+                  >
+                    查看
+                  </a>,
+                ]}
+              >
+                <List.Item.Meta avatar={<Avatar src={item.avator} />} title={item.name} />
+              </List.Item>
+            )}
+          />
         </TabPane>
       </Tabs>
       ,

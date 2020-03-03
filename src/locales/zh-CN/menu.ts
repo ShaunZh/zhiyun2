@@ -67,6 +67,8 @@ export default {
   'menu.staff.cloudpie': '云盘信息管理',
   'menu.platform': '平台管理',
   'menu.platform.school': '网校管理',
+  'menu.platform.order': '订单管理',
+  'menu.platform.hotkeyword': '热搜关键字管理',
   'menu.course.live': '直播间详情',
   'menu.course.sale': '上架信息',
   'menu.course.category': '分类管理',

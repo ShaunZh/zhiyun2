@@ -28,4 +28,25 @@ export default {
       );
     }, 3000);
   },
+  'POST /api/platform/customerservice': (req: any, res: any) => {
+    setTimeout(() => {
+      res.send(
+        mockjs.mock({
+          code: 200,
+          result: {
+            tableList: {
+              total: 100,
+              'data|10': [
+                {
+                  'No|+1': 1,
+                  ID: '1242344255',
+                  name: 'xx客服 ',
+                },
+              ],
+            },
+          },
+        }),
+      );
+    }, 3000);
+  },
 };

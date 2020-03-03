@@ -37,10 +37,10 @@ export default (props: propsType) => {
       <div>
         <div>
           <Radio.Group onChange={props.changeIdentity} value={props.identityValue}>
-            <Radio value={1}>A</Radio>
-            <Radio value={2}>B</Radio>
-            <Radio value={3}>C</Radio>
-            <Radio value={4}>D</Radio>
+            <Radio value={1}>总管理员</Radio>
+            <Radio value={2}>管理员</Radio>
+            <Radio value={3}>教师</Radio>
+            <Radio value={4}>会员</Radio>
           </Radio.Group>
         </div>
         <div>
