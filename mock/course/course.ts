@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2020-02-19 17:01:30
  * @LastEditors: Hexon
- * @LastEditTime: 2020-02-20 16:10:57
+ * @LastEditTime: 2020-03-03 16:10:43
  */
 
 import mockjs from 'mockjs';
@@ -48,10 +48,18 @@ export default {
   }),
   'POST /api/course/course/schoolsList': mockjs.mock({
     code: 200,
-    'result|1-5': [
+    result: [
       {
-        label: '@word(3, 5)',
-        value: '@id',
+        label: '第一',
+        value: '1',
+      },
+      {
+        label: '第二',
+        value: '2',
+      },
+      {
+        label: '第三',
+        value: '3',
       },
     ],
   }),
