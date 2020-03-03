@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Row, Col } from 'antd';
+import { Modal, List, Avatar } from 'antd';
 export interface friendsDataType {
   avator: string;
   name: string;
@@ -19,18 +19,22 @@ export default (props: propsType) => {
       onCancel={props.throughoutFriendsHandleCancel}
       footer={null}
     >
-      <div>
-        {props.friendsData.map((item: friendsDataType, index: number) => {
-          return (
-            <Row key={index}>
-              <Col span={6}>
-                <img src={item.avator}></img>
-              </Col>
-              <Col span={6}>{item.name}</Col>
-            </Row>
-          );
-        })}
-      </div>
+      <List
+        itemLayout="horizontal"
+        dataSource={props.friendsData}
+        renderItem={item => (
+          <List.Item>
+            <List.Item.Meta
+              avatar={
+                <Avatar src={item.avator} />
+              }
+              title={<a href="https://ant.design">{item.name}</a>}
+             
+            />
+          </List.Item>
+        )}
+      />
+      ,
     </Modal>
   );
 };

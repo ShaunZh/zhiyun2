@@ -16,7 +16,7 @@ export default {
                   nickName: '@first',
                   'sex|1': ['男', '女'],
                   tel: '12345677654',
-                  loginTime: '@datetime',
+                  loginTime: 3,
                   registerTime: '@datetime',
                   'identity|1': ['管理员', '超级管理员'],
                   'status|1': ['黑名单', '正常'],

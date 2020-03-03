@@ -71,8 +71,12 @@ class UserInfo extends React.Component<{}, Istate> {
     identityValue: 1,
     classData: [
       {
-        No: '',
-        class: '',
+        No: '1',
+        class: 'xx课程',
+      },
+      {
+        No: '2',
+        class: 'xx课程',
       },
     ],
     throughoutFriendsVisible: false,
@@ -212,11 +216,11 @@ class UserInfo extends React.Component<{}, Istate> {
       classData: [
         {
           No: '1',
-          class: '111111',
+          class: 'xx课程',
         },
         {
           No: '2',
-          class: '11134431',
+          class: 'xx课程',
         },
       ],
     });
@@ -232,11 +236,11 @@ class UserInfo extends React.Component<{}, Istate> {
       friendsData: [
         {
           avator: iconEdit,
-          name: 'ddddd',
+          name: 'xx好友',
         },
         {
           avator: iconEdit,
-          name: 'ddddd',
+          name: 'xx好友',
         },
       ],
     });

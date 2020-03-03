@@ -228,6 +228,18 @@ export default {
                   path: 'school',
                   component: './platForm/school',
                 },
+                {
+                  name: 'order',
+                  icon: 'smile',
+                  path: 'order',
+                  component: './platForm/order',
+                },
+                {
+                  name: 'hotkeyword',
+                  icon: 'smile',
+                  path: 'hotkeyword',
+                  component: './platForm/hotKeyword',
+                },
               ],
             },
             {
