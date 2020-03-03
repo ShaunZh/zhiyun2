@@ -4,13 +4,11 @@ import { Row, Col, Pagination } from 'antd';
 import styles from './index.less';
 import TableBasic, { ITableColumn } from './components/TableBasic';
 
-// 筛选项
-import StatusSelect from './components/StatusSelect';
-import CategorySelect from './components/CategorySelect';
-import SchoolSelect from './components/SchoolSelect';
-import UpSelect from './components/UpSelect';
+import { IListQueryParams } from './data.d';
+import consts from './consts';
+
 import SearchBox from '@/components/SearchBox';
-// --- end
+import Select from '@/components/Select';
 
 import courseApi, { ICourse } from '@/services/course/course';
 import { getTableRowIndex } from '@/utils/utils';
@@ -19,35 +17,37 @@ interface IState {
   loading: boolean;
   list: Array<ITableColumn>;
   total: number;
-  curPage: number;
-  pageSize: number;
-  keywords: string;
-  filter: {
-    category: string;
-    status: string;
-    up: string;
-    school: string;
+  listQuery: IListQueryParams;
+  filterOptions: {
+    category: Array<ISelectOption>;
+    school: Array<ISelectOption>;
+    status: Array<ISelectOption>;
+    up: Array<ISelectOption>;
   };
 }
-interface IFetchList {
-  pageSize?: number;
-  curPage?: number;
-  keywords?: string;
-  category?: string;
-  status?: string;
-  up?: string;
-  school?: string;
-}
 
-// TODO: 当进入到子页面后，从子页面返回时到当前页面时，要保留当前的页码信息、筛选信息和搜索信息，
 class Course extends React.Component<{}, IState> {
   state: IState = {
     loading: false,
     list: [],
-    curPage: 1,
-    pageSize: 10,
-    keywords: '',
-    filter: {
+    filterOptions: {
+      category: [],
+      school: [],
+      status: [
+        { label: '全部', value: '' },
+        { label: '启用', value: 'Y' },
+        { label: '禁用', value: 'N' },
+      ],
+      up: [
+        { label: '全部', value: '' },
+        { label: '是', value: 'Y' },
+        { label: '否', value: 'N' },
+      ],
+    },
+    listQuery: {
+      curPage: 1,
+      pageSize: 10,
+      keywords: '',
       category: '',
       status: '',
       up: '',
@@ -56,24 +56,34 @@ class Course extends React.Component<{}, IState> {
     total: 0,
   };
 
-  componentDidMount() {
-    this.fetchList({});
+  async componentDidMount() {
+    await this.fetchFilterOptions();
+    // 1. 获取session中保存的页码和筛选条件
+    const session = sessionStorage.getItem(consts.session.listQuery);
+    if (session) {
+      // 2. 将session信息传入fetchList中，并在fetchList中将信息恢复到state中
+      await this.fetchList(JSON.parse(session));
+      // 3. 清空session中的信息
+      sessionStorage.removeItem(consts.session.listQuery);
+    } else {
+      this.fetchList({});
+    }
   }
 
-  fetchList = async (queryParams: IFetchList) => {
+  fetchList = async ({
+    pageSize = this.state.listQuery.pageSize,
+    curPage = this.state.listQuery.curPage,
+    keywords = this.state.listQuery.keywords,
+    status = this.state.listQuery.status,
+    category = this.state.listQuery.category,
+    up = this.state.listQuery.up,
+    school = this.state.listQuery.school,
+  }) => {
     try {
       this.setState({
         loading: true,
       });
-      const {
-        pageSize = this.state.pageSize,
-        curPage = this.state.curPage,
-        keywords = this.state.keywords,
-        status = this.state.filter.status,
-        category = this.state.filter.category,
-        up = this.state.filter.up,
-        school = this.state.filter.school,
-      } = queryParams;
+
       const {
         result: { page, data },
       } = await courseApi.list({
@@ -97,10 +107,10 @@ class Course extends React.Component<{}, IState> {
         total: page.total,
         list,
         loading: false,
-        pageSize,
-        curPage,
-        keywords,
-        filter: {
+        listQuery: {
+          pageSize,
+          curPage,
+          keywords,
           status,
           category,
           up,
@@ -112,6 +122,21 @@ class Course extends React.Component<{}, IState> {
         loading: false,
       });
     }
+  };
+
+  fetchFilterOptions = async () => {
+    const { result: category } = await courseApi.categoriesList();
+    const { result: school } = await courseApi.schoolsList();
+    const { filterOptions } = this.state;
+    category.unshift({ label: '全部', value: '' });
+    school.unshift({ label: '全部', value: '' });
+    this.setState({
+      filterOptions: {
+        ...filterOptions,
+        category,
+        school,
+      },
+    });
   };
 
   // 选择状态
@@ -178,26 +203,60 @@ class Course extends React.Component<{}, IState> {
   };
 
   render() {
-    const { loading, list, total, curPage } = this.state;
+    const { loading, list, total, listQuery, filterOptions } = this.state;
     return (
       <PageHeaderWrapper className={styles.main}>
         <Row className="header" type="flex">
           <Col className="left" span={20}>
-            <CategorySelect handleChange={this.handleChangeCategory}></CategorySelect>
-            <StatusSelect handleChange={this.handleChangeStatus}></StatusSelect>
-            <UpSelect handleChange={this.handleChangeUp}></UpSelect>
-            <SchoolSelect handleChange={this.handleChangeSchool}></SchoolSelect>
+            <Select
+              options={filterOptions.category}
+              value={listQuery.category}
+              label="课程分类:"
+              placeholder="请选择课程分类"
+              handleChange={this.handleChangeCategory}
+            ></Select>
+
+            <Select
+              options={filterOptions.status}
+              value={listQuery.status}
+              label="课程状态:"
+              placeholder="请选择课程状态"
+              handleChange={this.handleChangeStatus}
+            ></Select>
+            <Select
+              options={filterOptions.up}
+              value={listQuery.up}
+              label="是否上架到平台:"
+              placeholder="请选择状态"
+              handleChange={this.handleChangeUp}
+            ></Select>
+            <Select
+              options={filterOptions.school}
+              value={listQuery.school}
+              label="所属网校:"
+              placeholder="请选择所属网校"
+              handleChange={this.handleChangeSchool}
+            ></Select>
           </Col>
           <Col className="right" span={4}>
-            <SearchBox placeholder="请输入搜索内容" handleSearch={this.handleSearch}></SearchBox>
+            <SearchBox
+              value={listQuery.keywords}
+              placeholder="请输入搜索内容"
+              handleSearch={this.handleSearch}
+            ></SearchBox>
           </Col>
         </Row>
 
-        <TableBasic loading={loading} list={list} handleActionEnable={this.handleActionEnable} />
+        <TableBasic
+          loading={loading}
+          list={list}
+          handleActionEnable={this.handleActionEnable}
+          listQuery={listQuery}
+        />
         <Pagination
           defaultCurrent={1}
           total={total}
-          current={curPage}
+          current={listQuery.curPage}
           onChange={this.handleChangePageNumber}
           onShowSizeChange={this.handleChangePageSize}
           showSizeChanger
