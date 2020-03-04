@@ -8,9 +8,6 @@ import iconEdit from '@/assets/icon-edit.png';
 import iconDel from '@/assets/icon-del.png';
 import iconSend from '@/assets/icon-send.png';
 
-import { IListQueryParams } from '../../data.d';
-import consts from '../../consts';
-
 // 状态组件
 const Status = (status: string) => {
   if (status === 'Y') {
@@ -37,14 +34,12 @@ interface ITableProps {
   loading: boolean;
   list: Array<ITableColumn> | [];
   handleActionEnable: (index: number) => void;
-  listQuery: IListQueryParams;
+  handleLocationJump: () => void;
 }
 
 export default (props: ITableProps) => {
-  const { loading, list, handleActionEnable, listQuery } = props;
-  const setListQueryToSession = () => {
-    sessionStorage.setItem(consts.session.listQuery, JSON.stringify(listQuery));
-  };
+  const { loading, list, handleActionEnable } = props;
+
   const columns: ColumnProps<ITableColumn>[] = [
     {
       title: 'No',
@@ -112,20 +107,26 @@ export default (props: ITableProps) => {
             hoverTip={record.status === 'Y' ? '禁用' : '启用'}
             handleClick={() => handleActionEnable(index)}
           ></TableAction>
-          <span onClick={setListQueryToSession}>
+          <span onClick={props.handleLocationJump}>
             <Link to="/course/staff">
               <TableAction iconSrc={iconDel} hoverTip="人员信息"></TableAction>
             </Link>
           </span>
-          <Link to="/course/resources">
-            <TableAction iconSrc={iconSend} hoverTip="课程资源"></TableAction>
-          </Link>
-          <Link to="/course/live">
-            <TableAction iconSrc={iconSend} hoverTip="直播间"></TableAction>
-          </Link>
-          <Link to="/course/sale">
-            <TableAction iconSrc={iconSend} hoverTip="上架信息"></TableAction>
-          </Link>
+          <span onClick={props.handleLocationJump}>
+            <Link to="/course/resources">
+              <TableAction iconSrc={iconSend} hoverTip="课程资源"></TableAction>
+            </Link>
+          </span>
+          <span onClick={props.handleLocationJump}>
+            <Link to="/course/live">
+              <TableAction iconSrc={iconSend} hoverTip="直播间"></TableAction>
+            </Link>
+          </span>
+          <span onClick={props.handleLocationJump}>
+            <Link to="/course/sale">
+              <TableAction iconSrc={iconSend} hoverTip="上架信息"></TableAction>
+            </Link>
+          </span>
         </div>
       ),
     },

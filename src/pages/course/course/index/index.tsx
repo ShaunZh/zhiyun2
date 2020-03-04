@@ -3,6 +3,7 @@ import React from 'react';
 import { Row, Col, Pagination } from 'antd';
 import styles from './index.less';
 import TableBasic, { ITableColumn } from './components/TableBasic';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { IListQueryParams } from './data.d';
 import consts from './consts';
@@ -26,7 +27,7 @@ interface IState {
   };
 }
 
-class Course extends React.Component<{}, IState> {
+class Course extends React.Component<RouteComponentProps, IState> {
   state: IState = {
     loading: false,
     list: [],
@@ -57,18 +58,25 @@ class Course extends React.Component<{}, IState> {
   };
 
   async componentDidMount() {
+    // 获取history记录
+    const { action } = this.props.history; // 获取浏览器的跳转行为
+    let session: string = '{}';
+
     await this.fetchFilterOptions();
-    // 1. 获取session中保存的页码和筛选条件
-    const session = sessionStorage.getItem(consts.session.listQuery);
-    if (session) {
-      // 2. 将session信息传入fetchList中，并在fetchList中将信息恢复到state中
-      await this.fetchList(JSON.parse(session));
-      // 3. 清空session中的信息
-      sessionStorage.removeItem(consts.session.listQuery);
-    } else {
-      this.fetchList({});
+    // 如果是POP，说明是从浏览器历史记录中取得的页面，也就是有可能从当前页面的子页面返回，因此获取session信息
+    if (action === 'POP') {
+      session = sessionStorage.getItem(consts.session.listQuery) || '{}';
     }
+
+    this.fetchList(JSON.parse(session));
+    sessionStorage.removeItem(consts.session.listQuery);
   }
+
+  // 跳转到子页面
+  handleLocationJump = () => {
+    // 设置list query信息到session中
+    sessionStorage.setItem(consts.session.listQuery, JSON.stringify(this.state.listQuery));
+  };
 
   fetchList = async ({
     pageSize = this.state.listQuery.pageSize,
@@ -251,7 +259,7 @@ class Course extends React.Component<{}, IState> {
           loading={loading}
           list={list}
           handleActionEnable={this.handleActionEnable}
-          listQuery={listQuery}
+          handleLocationJump={this.handleLocationJump}
         />
         <Pagination
           defaultCurrent={1}
