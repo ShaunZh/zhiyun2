@@ -8,12 +8,16 @@ export interface LoginParamsType {
 }
 
 export async function fakeAccountLogin(params: LoginParamsType) {
-  return request('/api/login/account', {
-    method: 'POST',
-    data: params,
+  return request('/oe--server-uaa/oauth/token', {
+    method: 'GET',
+    params,
+    // requestType: 'form',
+    // headers: {
+    //   'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    // },
   });
 }
 
 export async function getFakeCaptcha(mobile: string) {
-  return request(`/api/login/captcha?mobile=${mobile}`);
+  return request(`/login/captcha?mobile=${mobile}`);
 }
