@@ -3,7 +3,8 @@
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
 import { extend } from 'umi-request';
-import { notification } from 'antd';
+import { message } from 'antd';
+import { getToken } from './token';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -32,17 +33,11 @@ const errorHandler = (error: { response: Response }): Response => {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
 
-    notification.error({
-      message: `请求错误 ${status}: ${url}`,
-      description: errorText,
-    });
+    message.error(`请求错误 ${status}: ${url} - ${errorText}`);
   } else if (!response) {
-    notification.error({
-      description: '您的网络发生异常，无法连接服务器',
-      message: '网络异常',
-    });
+    message.error('您的网络发生异常，无法连接服务器');
   }
-  return response;
+  throw error;
 };
 
 /**
@@ -50,7 +45,25 @@ const errorHandler = (error: { response: Response }): Response => {
  */
 const request = extend({
   errorHandler, // 默认错误处理
-  credentials: 'include', // 默认请求是否带上cookie
+  // credentials: 'include', // 默认请求是否带上cookie
+  prefix: 'http://oe.knoleep.com:8006',
+  headers: {
+    // Authorization: '1212112121',
+  },
 });
+
+// Same as the last one
+request.interceptors.request.use(
+  (url, options) => {
+    const Authorization = `Authorization: ${getToken()}`;
+    const headers = { ...options.headers, Authorization };
+
+    return {
+      url,
+      options: { ...options, headers },
+    };
+  },
+  { global: true },
+);
 
 export default request;
