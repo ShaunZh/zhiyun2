@@ -86,7 +86,6 @@ class UserForm extends React.Component<IUserFormProps, IUserFormState> {
         form.resetFields();
         this.props.handleResult('success');
       } catch (e) {
-        console.error('error: ', e.message);
         this.setState({
           submitting: false,
         });

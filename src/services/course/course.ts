@@ -32,20 +32,20 @@ export interface ICourseListsParamType {
 
 // 课程分类
 export async function categoriesList() {
-  return request('/api/course/course/categoriesList', {
+  return request('/course/course/categoriesList', {
     method: 'POST',
   });
 }
 
 // 所属网校
 export async function schoolsList() {
-  return request('/api/course/course/schoolsList', {
+  return request('/course/course/schoolsList', {
     method: 'POST',
   });
 }
 
 export async function list(params: ICourseListsParamType) {
-  return request('/api/course/course/list', {
+  return request('/course/course/list', {
     method: 'POST',
     data: params,
   });
@@ -53,7 +53,7 @@ export async function list(params: ICourseListsParamType) {
 
 // 禁用或启用
 export async function enable(params: { number: string }) {
-  return request('/api/course/course/enable', {
+  return request('/course/course/enable', {
     method: 'POST',
     data: params,
   });

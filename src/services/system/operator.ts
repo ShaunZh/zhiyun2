@@ -29,47 +29,47 @@ export interface ISubmitOperatorEditParamType extends ISubmitOperatorParamType {
 }
 
 export async function list(params: IOperatorsListsParamType) {
-  return request('/api/system/operator/list', {
+  return request('/system/operator/list', {
     method: 'POST',
     data: params,
   });
 }
 
 export async function statusOptions() {
-  return request('/api/system/operator/statusOptions', {
+  return request('/system/operator/statusOptions', {
     method: 'POST',
   });
 }
 
 export async function create(params: ISubmitOperatorParamType) {
-  return request('/api/system/operator/create', {
+  return request('/system/operator/create', {
     method: 'POST',
     data: params,
   });
 }
 
 export async function roleOptions() {
-  return request('/api/system/operator/roleOptions', {
+  return request('/system/operator/roleOptions', {
     method: 'POST',
   });
 }
 
 export async function detail(params: { number: string }) {
-  return request('/api/system/operator/detail', {
+  return request('/system/operator/detail', {
     method: 'POST',
     data: params,
   });
 }
 
 export async function update(params: ISubmitOperatorEditParamType) {
-  return request('/api/system/operator/update', {
+  return request('/system/operator/update', {
     method: 'POST',
     data: params,
   });
 }
 
 export async function remove(params: { number: string }) {
-  return request('/api/system/operator/remove', {
+  return request('/system/operator/remove', {
     method: 'POST',
     data: params,
   });

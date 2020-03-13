@@ -22,7 +22,7 @@ export interface IResource {
 }
 
 export async function list(params: ICourseResourcesParamType) {
-  return request('/api/course/resources/list', {
+  return request('/course/resources/list', {
     method: 'POST',
     data: params,
   });
@@ -30,7 +30,7 @@ export async function list(params: ICourseResourcesParamType) {
 
 // 禁用或启用
 export async function enable(params: { number: string }) {
-  return request('/api/course/resources/enable', {
+  return request('/course/resources/enable', {
     method: 'POST',
     data: params,
   });

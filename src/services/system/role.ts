@@ -1,12 +1,12 @@
 import request from '@/utils/request';
 export async function roleList(params: number) {
-  return request('/api/system/role/list', {
+  return request('/system/role/list', {
     method: 'POST',
     data: params,
   });
 }
 export async function roleTreeData() {
-  return request('/api/system/role/treedata', {
+  return request('/system/role/treedata', {
     method: 'GET',
   });
 }

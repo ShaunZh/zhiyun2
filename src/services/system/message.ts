@@ -24,40 +24,40 @@ export interface ISubmitMessageEditParamType extends ISubmitMessageParamType {
 }
 
 export async function list(params: IMessagesListsParamType) {
-  return request('/api/system/message/list', {
+  return request('/system/message/list', {
     method: 'POST',
     data: params,
   });
 }
 
 export async function statusOptions() {
-  return request('/api/system/message/statusOptions', {
+  return request('/system/message/statusOptions', {
     method: 'POST',
   });
 }
 
 export async function create(params: ISubmitMessageParamType) {
-  return request('/api/system/message/create', {
+  return request('/system/message/create', {
     method: 'POST',
     data: params,
   });
 }
 export async function detail(params: { number: string }) {
-  return request('/api/system/message/detail', {
+  return request('/system/message/detail', {
     method: 'POST',
     data: params,
   });
 }
 
 export async function update(params: ISubmitMessageEditParamType) {
-  return request('/api/system/message/update', {
+  return request('/system/message/update', {
     method: 'POST',
     data: params,
   });
 }
 
 export async function remove(params: { number: string }) {
-  return request('/api/system/message/remove', {
+  return request('/system/message/remove', {
     method: 'POST',
     data: params,
   });
