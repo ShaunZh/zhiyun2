@@ -82,7 +82,7 @@ export default {
         {
           name: 'login',
           path: '/user/login',
-          component: './user/DENGLU',
+          component: './user/login',
         },
       ],
     },
@@ -93,7 +93,7 @@ export default {
         {
           path: '/',
           component: '../layouts/BasicLayout',
-          authority: ['admin', 'user'],
+          // authority: ['admin', 'user'],
           routes: [
             {
               path: '/',
@@ -110,7 +110,7 @@ export default {
               name: 'admin',
               icon: 'crown',
               component: './Admin',
-              authority: ['admin'],
+              // authority: ['admin'],
             },
             {
               name: 'system',
@@ -336,10 +336,10 @@ export default {
     basePath: '/',
   }, // chainWebpack: webpackPlugin,
   // proxy: {
-  //   '/server/api/': {
-  //     target: 'https://preview.pro.ant.design/',
+  //   '/': {
+  //     target: 'http://oe.knoleep.com:8006',
   //     changeOrigin: true,
-  //     pathRewrite: { '^/server': '' },
+  //     pathRewrite: { '^': '' },
   //   },
   // },
 } as IConfig;
