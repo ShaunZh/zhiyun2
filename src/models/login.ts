@@ -6,6 +6,7 @@ import { router } from 'umi';
 import { fakeAccountLogin, getFakeCaptcha } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
+import { setToken } from '@/utils/token';
 
 export interface StateType {
   status?: 'ok' | 'error';
@@ -35,30 +36,44 @@ const Model: LoginModelType = {
 
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
+      const formData = new FormData();
+
+      const newPayload = {
+        client_id: 'zy-oe-client',
+        client_secret: 'zy-oe-secret',
+        grant_type: 'password',
+        username: 'admin',
+        password: '123456',
+      };
+      Object.keys(newPayload).forEach((key: string) => {
+        formData.append(key, newPayload[key]);
+      });
+      const response = yield call(fakeAccountLogin, newPayload);
       yield put({
         type: 'changeLoginStatus',
-        payload: response,
+        payload: response.result,
       });
+      // window.location.href = '/';
+      router.replace('/welcome');
       // Login successfully
-      if (response.status === 'ok') {
-        const urlParams = new URL(window.location.href);
-        const params = getPageQuery();
-        let { redirect } = params as { redirect: string };
-        if (redirect) {
-          const redirectUrlParams = new URL(redirect);
-          if (redirectUrlParams.origin === urlParams.origin) {
-            redirect = redirect.substr(urlParams.origin.length);
-            if (redirect.match(/^\/.*#/)) {
-              redirect = redirect.substr(redirect.indexOf('#') + 1);
-            }
-          } else {
-            window.location.href = '/';
-            return;
-          }
-        }
-        router.replace(redirect || '/');
-      }
+      // if (response.code === 200) {
+      //   const urlParams = new URL(window.location.href);
+      //   const params = getPageQuery();
+      //   let { redirect } = params as { redirect: string };
+      //   if (redirect) {
+      //     const redirectUrlParams = new URL(redirect);
+      //     if (redirectUrlParams.origin === urlParams.origin) {
+      //       redirect = redirect.substr(urlParams.origin.length);
+      //       if (redirect.match(/^\/.*#/)) {
+      //         redirect = redirect.substr(redirect.indexOf('#') + 1);
+      //       }
+      //     } else {
+      //       window.location.href = '/';
+      //       return;
+      //     }
+      //   }
+      //   router.replace(redirect || '/');
+      // }
     },
 
     *getCaptcha({ payload }, { call }) {
@@ -81,11 +96,13 @@ const Model: LoginModelType = {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
-      setAuthority(payload.currentAuthority);
+      setAuthority('admin');
+      setToken(`${payload.token_type} ${payload.access_token}`);
+
       return {
         ...state,
-        status: payload.status,
-        type: payload.type,
+        status: 'ok',
+        type: 'admin',
       };
     },
   },
